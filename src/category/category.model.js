@@ -36,7 +36,7 @@ const createCategory = async () => {
             console.log("Default category created");
         }
     } catch (error) {
-        console.error("Error creating default category:", error);
+        console.error("Error creating default category:", error)
     }
 }
 

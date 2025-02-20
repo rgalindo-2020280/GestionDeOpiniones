@@ -110,38 +110,30 @@ export const deleteCategory = async (req, res) => {
         const { id } = req.params
         const category = await Category.findById(id)
         if (!category) {
-            return res.status(404).send(
-                {
-                    success: false,
-                    message: "Category not found" 
-                }
-            )
+            return res.status(404).send({ success: false, message: "Category not found" })
         }
-        const defaultCategory = await Category.findOne(
-                { 
-                    name: "General" 
-                }
-            )
+        const defaultCategory = await Category.findOne({ name: "General" })
         if (!defaultCategory) {
-            return res.status(500).send(
-                { 
-                    success: false, 
-                    message: "Default category not found. Cannot proceed with deletion."
-                }
-            )
+            return res.status(500).send({ success: false, message: "Default category not found. Cannot proceed with deletion." })
         }
+        const postsToUpdate = await Post.find({ categoryId: category._id })
         await Post.updateMany(
             { categoryId: category._id },
             { $set: { categoryId: defaultCategory._id } }
         )
+        if (postsToUpdate.length > 0) {
+            await Category.findByIdAndUpdate(defaultCategory._id, {
+                $push: { posts: { $each: postsToUpdate.map(post => post._id) } }
+            })
+        }
         await Category.findByIdAndDelete(id)
-        return res.status(200).send(
-            { 
-                success: true, 
-                message: "Category deleted successfully. Posts moved to default category.", 
-                defaultCategory 
-            }
-        )
+
+        return res.status(200).send({
+            success: true,
+            message: "Category deleted successfully. Posts moved to default category.",
+            defaultCategory
+        })
+
     } catch (error) {
         return res.status(500).send({ success: false, message: "Error deleting category", error: error.message })
     }

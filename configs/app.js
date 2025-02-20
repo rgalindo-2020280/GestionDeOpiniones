@@ -7,6 +7,8 @@ import cors from 'cors'
 import authRoutes from '../src/auth/auth.routes.js'
 import userRoutes from '../src/user/user.routes.js'
 import categoryRoutes from '../src/category/category.routes.js'
+import postRoutes from '../src/post/post.routes.js'
+import commentRoutes from '../src/comment/comment.routes.js'
 
 const configs = (app)=>{
     app.use(express.json())
@@ -20,6 +22,8 @@ const routes = (app)=>{
     app.use(authRoutes)
     app.use('/v1/user', userRoutes)
     app.use('/v1/category', categoryRoutes)
+    app.use('/v1/post', postRoutes )
+    app.use('/v1/comment', commentRoutes )
 }
 
 export const initServer = async()=>{
