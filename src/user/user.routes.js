@@ -4,19 +4,19 @@ import {
     updatePassword,
 } from './user.controller.js'
 import { validateJwt} from '../../middlewares/validate.jwt.js'
-/*import { updateUserValidator, updatePasswordValidator } from '../../helpers/validator.js'*/
+import { updateUserValidator, updatePasswordValidator } from '../../helpers/validator.js'
 
 const api = Router()
 
 api.put(
     '/password', 
-    [validateJwt],
+    [validateJwt, updatePasswordValidator],
     updatePassword
 )
 
 api.put(
     '/MyProfile',
-    [validateJwt],
+    [validateJwt, updateUserValidator],
     updateUser
 )
 

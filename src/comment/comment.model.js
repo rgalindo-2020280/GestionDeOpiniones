@@ -17,6 +17,10 @@ const commentSchema = new Schema({
             required: [true, "Content is required"],
             maxLength: [500, "Cannot exceed 500 characters"]
         },
+        status: {
+            type: Boolean,
+            default: true
+        },
         createdAt: {
             type: Date,
             default: Date.now

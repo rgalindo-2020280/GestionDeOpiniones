@@ -25,6 +25,10 @@ const postSchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Comment"
         }],
+        status: {
+            type: Boolean,
+            default: true
+        },
         createdAt: {
             type: Date,
             default: Date.now

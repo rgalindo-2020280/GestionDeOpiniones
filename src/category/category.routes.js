@@ -5,23 +5,24 @@ import {
     updateCategory
 } from './category.controller.js'
 import { validateJwt} from '../../middlewares/validate.jwt.js'
+import { isAdmin } from '../../middlewares/validate.jwt.js'
 
 const api = Router()
 api.post(
     '/addCategory',
-    [validateJwt],
+    [validateJwt, isAdmin],
     addCategory
 )
 
 api.put(
     '/:id',
-    [validateJwt],
+    [validateJwt, isAdmin],
     updateCategory
 )
 
 api.delete(
     '/:id',
-    [validateJwt],
+    [validateJwt, isAdmin],
     deleteCategory
 )
 
