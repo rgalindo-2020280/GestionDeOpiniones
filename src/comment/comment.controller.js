@@ -44,7 +44,7 @@ export const addComment = async (req, res) => {
         await Post.findByIdAndUpdate(postId, { $push: { comments: newComment._id } })
         await User.findByIdAndUpdate(userIdFromToken, { $push: { comments: newComment._id } })
 
-        const populatedComment = await Comment.findById(newComment._id).populate("userId", "username email").populate("postId", "title")
+        const populatedComment = await Comment.findById(newComment._id).populate("userId", "username email -_id").populate("postId", "title -_id")
 
         return res.status(201).send({
                 success: true,
@@ -106,7 +106,7 @@ export const updateComment = async (req, res) => {
             await User.findByIdAndUpdate(comment.userId, { $push: { comments: comment._id } })
         }
         await comment.save()
-        const populatedComment = await Comment.findById(comment._id).populate("userId", "username email").populate("postId", "title")
+        const populatedComment = await Comment.findById(comment._id).populate("userId", "username email -_id").populate("postId", "title -_id")
         return res.status(200).send({
             success: true,
             message: "Comment updated successfully",
@@ -164,3 +164,67 @@ export const deleteComment = async (req, res) => {
     }
 }
 
+export const getComments = async (req, res) => {
+    try {
+        const { postId } = req.body
+        if (!postId) {
+            return res.status(400).send({ success: false, message: "Post ID is required" })
+        }
+        const postExists = await Post.findById(postId)
+        if (!postExists) {
+            return res.status(400).send(
+                { 
+                    success: false, 
+                    message: "Post does not exist" 
+                }
+            )
+        }
+        const comments = await Comment.find({ postId }).populate("userId", "username email -_id").populate("postId", "title -_id")
+        if (comments.length === 0) {
+            return res.status(404).send(
+                { 
+                    success: false, 
+                    message: "No comments found for this post" 
+                }
+            )
+        }
+        return res.status(200).send({
+            success: true,
+            message: "Comments retrieved successfully",
+            comments
+        })
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving comments",
+            error: error.message
+        })
+    }
+}
+
+export const getAllComments = async (req, res) => {
+    try {
+        // Obtener todos los comentarios
+        const comments = await Comment.find().populate("userId", "username email -_id").populate("postId", "title -_id")
+
+        if (comments.length === 0) {
+            return res.status(404).send({
+                success: false,
+                message: "No comments found"
+            })
+        }
+
+        return res.status(200).send({
+            success: true,
+            message: "Comments retrieved successfully",
+            comments
+        })
+
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving comments",
+            error: error.message
+        })
+    }
+}

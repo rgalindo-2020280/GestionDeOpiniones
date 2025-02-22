@@ -100,3 +100,55 @@ export const updatePostValidator = [
     .isMongoId(),
     validateErrorWithoutImg
 ]
+
+export const addCategoryValidator = [
+    body('name', "Category name is required and cannot exceed 50 characters")
+    .notEmpty()
+    .isLength({ max: 50 }),
+    body('description', "Description cannot exceed 250 characters")
+    .optional()
+    .isLength({ max: 250 }),
+    body('postIds', "Post IDs should be an array of valid ObjectIds")
+    .optional()
+    .isArray()
+    .custom((value) => {
+        return value.every(postId => /^[0-9a-fA-F]{24}$/.test(postId))
+    }),
+    validateErrorWithoutImg
+]
+
+export const updateCategoryValidator = [
+    body('name', "Category name is required and cannot exceed 50 characters")
+    .optional()
+    .isLength({ max: 50 }),
+    body('description', "Description cannot exceed 250 characters")
+    .optional()
+    .isLength({ max: 250 }),
+    body('postIds', "Post IDs should be an array of valid ObjectIds")
+    .optional()
+    .isArray()
+    .custom((value) => {
+        return value.every(postId => /^[0-9a-fA-F]{24}$/.test(postId))
+    }),
+    validateErrorWithoutImg
+]
+
+export const addCommentValidator = [
+    body('postId', "Post ID is required and must be a valid ObjectId")
+    .notEmpty()
+    .isMongoId(),
+    body('content', "Content is required and cannot exceed 500 characters")
+    .notEmpty()
+    .isLength({ max: 500 }),
+    validateErrorWithoutImg
+]
+
+export const updateCommentValidator = [
+    body('content', "Content is required and cannot exceed 500 characters")
+    .notEmpty()
+    .isLength({ max: 500 }),
+    body('postId', "Post ID must be a valid ObjectId")
+    .optional()
+    .isMongoId(),
+    validateErrorWithoutImg
+]

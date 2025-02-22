@@ -178,3 +178,29 @@ export const deletePost = async (req, res) => {
     }
 }
 
+export const getAllPosts = async (req, res) => {
+    try {
+        const posts = await Post.find({ status: true }).populate("userId", "username email -_id") .populate("categoryId", "name description -_id")
+        if (posts.length === 0) {
+            return res.status(404).send({
+                success: false,
+                message: "No posts found"
+            })
+        }
+
+        return res.status(200).send({
+            success: true,
+            message: "Posts retrieved successfully",
+            posts
+        })
+
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving posts",
+            error: error.message
+        })
+    }
+}
+
+

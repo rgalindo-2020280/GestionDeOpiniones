@@ -122,7 +122,6 @@ export const deleteCategory = async (req, res) => {
                 }
             )
         }
-
         const defaultCategory = await Category.findOne({ name: "General" })
         if (!defaultCategory) {
             return res.status(500).send(
@@ -132,34 +131,53 @@ export const deleteCategory = async (req, res) => {
                 }
             )
         }
-
         const postsToUpdate = await Post.find({ categoryId: category._id })
-
         await Post.updateMany(
             { categoryId: category._id },
             { $set: { categoryId: defaultCategory._id } }
         )
-
         if (postsToUpdate.length > 0) {
             await Category.findByIdAndUpdate(defaultCategory._id, {
                 $push: { posts: { $each: postsToUpdate.map(post => post._id) } }
             })
         }
-
         await Category.findByIdAndDelete(id)
-
         const populatedDefaultCategory = await Category.findById(defaultCategory._id).populate("posts", "title content")
-
         return res.status(200).send({
             success: true,
             message: "Category deleted successfully. Posts moved to default category.",
             defaultCategory: populatedDefaultCategory
         })
-
     } catch (error) {
         return res.status(500).send({
             success: false,
             message: "Error deleting category",
+            error: error.message
+        })
+    }
+}
+
+export const getAllCategories = async (req, res) => {
+    try {
+        const categories = await Category.find().populate("posts", "title content -_id")
+
+        if (categories.length === 0) {
+            return res.status(404).send({
+                success: false,
+                message: "No categories found"
+            })
+        }
+
+        return res.status(200).send({
+            success: true,
+            message: "Categories retrieved successfully",
+            categories
+        })
+
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving categories",
             error: error.message
         })
     }
