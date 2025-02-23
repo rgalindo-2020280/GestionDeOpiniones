@@ -141,6 +141,7 @@ export const deletePost = async (req, res) => {
     try {
         const { id } = req.params
         const userIdFromToken = req.user.uid
+
         const post = await Post.findById(id)
         if (!post) {
             return res.status(404).send(
@@ -159,13 +160,16 @@ export const deletePost = async (req, res) => {
                 }
             )
         }
+
         post.status = false
         await post.save()
+        await Comment.updateMany({ postId: post._id }, { $set: { status: false } })
         await User.findByIdAndUpdate(post.userId, { $pull: { posts: post._id } })
         await Category.findByIdAndUpdate(post.categoryId, { $pull: { posts: post._id } })
+
         return res.status(200).send({
             success: true,
-            message: "Post status changed to false and removed from related arrays",
+            message: "Post status changed to false, comments deactivated, and removed from related arrays",
             post
         })
 
@@ -178,20 +182,33 @@ export const deletePost = async (req, res) => {
     }
 }
 
+
 export const getAllPosts = async (req, res) => {
     try {
-        const posts = await Post.find({ status: true }).populate("userId", "username email -_id") .populate("categoryId", "name description -_id")
+        const { page = 1, limit = 10 } = req.query 
+        const skip = (page - 1) * limit  
+        const posts = await Post.find({ status: true }).populate("userId", "username email -_id").populate("categoryId", "name description -_id") .populate({
+            path: 'comments',
+            select: '-_id postId', 
+            populate: {
+                path: 'userId',
+                select: 'username email -_id'
+            }
+        })
+            .skip(skip)
+            .limit(limit)
         if (posts.length === 0) {
             return res.status(404).send({
                 success: false,
                 message: "No posts found"
             })
         }
-
+        const totalPosts = await Post.countDocuments({ status: true })
         return res.status(200).send({
             success: true,
             message: "Posts retrieved successfully",
-            posts
+            posts,
+            totalPosts,
         })
 
     } catch (error) {
@@ -202,5 +219,51 @@ export const getAllPosts = async (req, res) => {
         })
     }
 }
+
+export const getUserPosts = async (req, res) => {
+    try {
+        const { page = 1, limit = 10 } = req.query 
+        const skip = (page - 1) * limit 
+        const userIdFromToken = req.user.uid 
+        const posts = await Post.find({ userId: userIdFromToken, status: true })
+            .populate("userId", "username email -_id") 
+            .populate("categoryId", "name description -_id") 
+            .populate({
+                path: 'comments',
+                select: '-_id postId', 
+                populate: {
+                    path: 'userId',
+                    select: 'username email -_id'
+                }
+            })
+            .skip(skip)
+            .limit(limit)
+
+        if (posts.length === 0) {
+            return res.status(404).send({
+                success: false,
+                message: "No posts found"
+            })
+        }
+
+        const totalPosts = await Post.countDocuments({ userId: userIdFromToken, status: true })
+
+        return res.status(200).send({
+            success: true,
+            message: "Posts retrieved successfully",
+            posts,
+            totalPosts
+        })
+
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving posts",
+            error: error.message
+        })
+    }
+}
+
+
 
 

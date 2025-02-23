@@ -81,3 +81,91 @@ export const updatePassword = async (req, res) => {
     }
 }
 
+export const getOne = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.uid)
+            .select("-password -__v") 
+            .populate({
+                path: 'comments',
+                select: 'content status -_id', 
+                match: { status: true },
+                populate: {
+                    path: 'postId',  
+                    select: 'title -_id' 
+                }
+            })
+            .populate({
+                path: 'posts',
+                select: 'title content status -_id'  
+            })
+
+        if (!user) {
+            return res.status(404).send({
+                success: false,
+                message: "User not found"
+            })
+        }
+
+        return res.status(200).send({
+            success: true,
+            message: "User profile retrieved successfully",
+            user
+        })
+
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving user profile",
+            error: error.message
+        })
+    }
+}
+
+
+export const getAllUsers = async (req, res) => {
+    try {
+        const { page = 1, limit = 20 } = req.query  
+        const skip = (page - 1) * limit 
+      const users = await User.find()
+            .select("-password -__v")
+            .skip(skip)   
+            .limit(limit) 
+            .populate({
+                path: 'comments',
+                select: 'content status userId -_id',
+                match: { status: true },  
+                populate: {
+                    path: 'userId',
+                    select: 'username email -_id'
+                }
+            })
+            .populate({
+                path: 'posts',
+                select: 'title content status -_id'
+            })
+
+        const totalUsers = await User.countDocuments() 
+        if (users.length === 0) {
+            return res.status(404).send({
+                success: false,
+                message: "No users found"
+            })
+        }
+
+        return res.status(200).send({
+            success: true,
+            message: "Users retrieved successfully",
+            users,
+            totalUsers,
+        })
+
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "Error retrieving users",
+            error: error.message
+        })
+    }
+}
+
+

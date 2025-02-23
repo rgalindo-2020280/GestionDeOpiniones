@@ -204,7 +204,6 @@ export const getComments = async (req, res) => {
 
 export const getAllComments = async (req, res) => {
     try {
-        // Obtener todos los comentarios
         const comments = await Comment.find().populate("userId", "username email -_id").populate("postId", "title -_id")
 
         if (comments.length === 0) {

@@ -42,10 +42,7 @@ api.delete(
 
 api.get(
     '/getAllCategory',
-    [
-        validateJwt, 
-        isAdmin
-    ],
+    [validateJwt],
     getAllCategories
 )
 
