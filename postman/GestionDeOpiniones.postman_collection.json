@@ -143,22 +143,22 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "Alex1",
+									"value": "Alex",
 									"type": "text"
 								},
 								{
 									"key": "surname",
-									"value": "Reyes1",
+									"value": "Reyes",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "areyes2sds",
+									"value": "areyes",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "amorgan2@kinal.edu.gt",
+									"value": "amorgan@kinal.edu.gt",
 									"type": "text"
 								},
 								{
@@ -301,17 +301,12 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "Tecnologia",
+									"value": "Noticias",
 									"type": "text"
 								},
 								{
 									"key": "description",
-									"value": "pc",
-									"type": "text"
-								},
-								{
-									"key": "postIds",
-									"value": "67b66018d87f88e30ac79ff1",
+									"value": "Deportivo, etc",
 									"type": "text"
 								}
 							]
@@ -348,23 +343,18 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "Hate",
+									"value": "Deportes",
 									"type": "text"
 								},
 								{
 									"key": "description",
-									"value": "pc",
-									"type": "text"
-								},
-								{
-									"key": "postIds",
-									"value": "",
+									"value": "Futbol, Basquet, boxeo",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3800/v1/category/67b5255ea19bdccff90b7c0c",
+							"raw": "http://localhost:3800/v1/category/67bbbce501ed9ebeb137fca2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -373,7 +363,7 @@
 							"path": [
 								"v1",
 								"category",
-								"67b5255ea19bdccff90b7c0c"
+								"67bbbce501ed9ebeb137fca2"
 							]
 						}
 					},
@@ -464,7 +454,7 @@
 								},
 								{
 									"key": "categoryId",
-									"value": "67b51d3f956b2ff881ad50b2",
+									"value": "67bbbce501ed9ebeb137fca2",
 									"type": "text"
 								}
 							]
@@ -501,23 +491,23 @@
 							"urlencoded": [
 								{
 									"key": "title",
-									"value": "HATE GUATEMALA",
+									"value": "Messi Ganador del mundia 2022",
 									"type": "text"
 								},
 								{
 									"key": "content",
-									"value": "Mensaje ofensivo ULTRA",
+									"value": "El argentino saca tricampeon a su selección",
 									"type": "text"
 								},
 								{
 									"key": "categoryId",
-									"value": "67b5255ea19bdccff90b7c0c",
+									"value": "67bbb3423765ad8d50509ba2",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3800/v1/post/67b6616c9b39be38f70798cc",
+							"raw": "http://localhost:3800/v1/post/67bbb4bab58b0e5aea5c67da",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -526,7 +516,7 @@
 							"path": [
 								"v1",
 								"post",
-								"67b6616c9b39be38f70798cc"
+								"67bbb4bab58b0e5aea5c67da"
 							]
 						}
 					},
@@ -598,7 +588,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3800/v1/user/getMyPost",
+							"raw": "http://localhost:3800/v1/post/getMyPost",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -606,7 +596,7 @@
 							"port": "3800",
 							"path": [
 								"v1",
-								"user",
+								"post",
 								"getMyPost"
 							]
 						}
@@ -634,12 +624,12 @@
 							"urlencoded": [
 								{
 									"key": "postId",
-									"value": "67b7be12775802f39cf753e3",
+									"value": "67bbb4bab58b0e5aea5c67da",
 									"type": "text"
 								},
 								{
 									"key": "content",
-									"value": "Este es un nuevo comentario en la publicación2",
+									"value": "Que grande",
 									"type": "text"
 								}
 							]
@@ -676,18 +666,18 @@
 							"urlencoded": [
 								{
 									"key": "postId",
-									"value": "67b66018d87f88e30ac79ff1",
+									"value": "67bbb4bab58b0e5aea5c67da",
 									"type": "text"
 								},
 								{
 									"key": "content",
-									"value": "Holi",
+									"value": "Que jugador tan excepcional",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3800/v1/comment/67b6a9aa5a88d7c03e2f48dc",
+							"raw": "http://localhost:3800/v1/comment/67bbb559b58b0e5aea5c67f7",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -696,7 +686,7 @@
 							"path": [
 								"v1",
 								"comment",
-								"67b6a9aa5a88d7c03e2f48dc"
+								"67bbb559b58b0e5aea5c67f7"
 							]
 						}
 					},
@@ -718,7 +708,7 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:3800/v1/comment/67b7b80757d25e8811001b39",
+							"raw": "http://localhost:3800/v1/comment/67bba586f2c6b7f7c066a59e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -727,7 +717,7 @@
 							"path": [
 								"v1",
 								"comment",
-								"67b7b80757d25e8811001b39"
+								"67bba586f2c6b7f7c066a59e"
 							]
 						}
 					},

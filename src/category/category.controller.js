@@ -6,22 +6,28 @@ export const addCategory = async (req, res) => {
         const { name, description, postIds } = req.body
 
         if (!name) {
-            return res.status(400).send({ success: false, message: "Category name is required" })
+            return res.status(400).send(
+                { 
+                    success: false, 
+                    message: "Category name is required" 
+                }
+            )
         }
-
         const existingCategory = await Category.findOne({ name })
         if (existingCategory) {
-            return res.status(400).send({ success: false, message: "Category already exists" })
+            return res.status(400).send(
+                { 
+                    success: false, 
+                    message: "Category already exists" 
+                }
+            )
         }
-
         const newCategory = new Category({
             name,
             description: description || "",
             posts: []
         })
-
         await newCategory.save()
-
         if (postIds && postIds.length > 0) {
             await Post.updateMany(
                 { _id: { $in: postIds } },
@@ -30,8 +36,11 @@ export const addCategory = async (req, res) => {
             newCategory.posts = postIds
             await newCategory.save()
         }
-
-        const populatedCategory = await Category.findById(newCategory._id).populate("posts", "title content")
+        const populatedCategory = await Category.findById(newCategory._id)
+            .populate({
+                path: 'posts',
+                select: 'title content -_id'  
+            })
 
         return res.status(201).send({
             success: true,
@@ -48,52 +57,47 @@ export const addCategory = async (req, res) => {
     }
 }
 
+
 export const updateCategory = async (req, res) => {
     try {
         const { id } = req.params
         const { name, description, postIds } = req.body
         const category = await Category.findById(id)
         if (!category) {
-            return res.status(404).send(
-                { 
-                    success: false, 
-                    message: "Category not found" 
-                }
-            )
+            return res.status(404).send({
+                success: false,
+                message: "Category not found"
+            })
         }
-
         if (name && name !== category.name) {
             const existingCategory = await Category.findOne({ name })
             if (existingCategory) {
-                return res.status(400).send(
-                    { 
-                        success: false, 
-                        message: "Category name already exists" 
-                    }
-                )
+                return res.status(400).send({
+                    success: false,
+                    message: "Category name already exists"
+                })
             }
         }
-
         category.name = name || category.name
         category.description = description || category.description
-
         if (postIds) {
             await Post.updateMany(
                 { categoryId: category._id },
                 { $unset: { categoryId: "" } }
             )
-
             await Post.updateMany(
                 { _id: { $in: postIds } },
                 { $set: { categoryId: category._id } }
             )
-
             category.posts = postIds
         }
 
         await category.save()
-
-        const populatedCategory = await Category.findById(category._id).populate("posts", "title content")
+        const populatedCategory = await Category.findById(category._id)
+            .populate({
+                path: 'posts',
+                select: 'title content -_id'  
+            })
 
         return res.status(200).send({
             success: true,
@@ -109,6 +113,7 @@ export const updateCategory = async (req, res) => {
         })
     }
 }
+
 
 export const deleteCategory = async (req, res) => {
     try {
