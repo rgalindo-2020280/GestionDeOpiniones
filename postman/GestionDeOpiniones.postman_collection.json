@@ -1,0 +1,813 @@
+{
+	"info": {
+		"_postman_id": "fa5f80d2-3289-438c-9470-7cd4c74e05d5",
+		"name": "GestionDeOpiniones",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38230181"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Alex",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Morgan",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "amorgan",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "amorgan@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Pibe231-",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "52856895",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3800/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"postman.setGlobalVariable(\"token\",data.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "userLoggin",
+									"value": "rgalindo",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "W2Axa2-28",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3800/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "UpdateUser",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Alex1",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Reyes1",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "areyes2sds",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "amorgan2@kinal.edu.gt",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "53068541",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3800/v1/user/MyProfile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"user",
+								"MyProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdatePassword",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "oldPassword",
+									"value": "Pibe231-",
+									"type": "text"
+								},
+								{
+									"key": "newPassword",
+									"value": "Pibe232-",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3800/v1/user/password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"user",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMyProfile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3800/v1/user/myProfile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"user",
+								"myProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllUsers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3800/v1/user/AllUsers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"user",
+								"AllUsers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "AddCategory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Tecnologia",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "pc",
+									"type": "text"
+								},
+								{
+									"key": "postIds",
+									"value": "67b66018d87f88e30ac79ff1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3800/v1/category/addCategory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"category",
+								"addCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCategory",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Hate",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "pc",
+									"type": "text"
+								},
+								{
+									"key": "postIds",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3800/v1/category/67b5255ea19bdccff90b7c0c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"category",
+								"67b5255ea19bdccff90b7c0c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCategory",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3800/v1/category/67b673f7177844dd5651b7f7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"category",
+								"67b673f7177844dd5651b7f7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllCategory",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3800/v1/category/getAllCategory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"category",
+								"getAllCategory"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "AddPost",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "Messi gana el mundial",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "El argentino logra sacar campeon a su seleccion",
+									"type": "text"
+								},
+								{
+									"key": "categoryId",
+									"value": "67b51d3f956b2ff881ad50b2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3800/v1/post/addPost",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"post",
+								"addPost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdatePost",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "HATE GUATEMALA",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Mensaje ofensivo ULTRA",
+									"type": "text"
+								},
+								{
+									"key": "categoryId",
+									"value": "67b5255ea19bdccff90b7c0c",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3800/v1/post/67b6616c9b39be38f70798cc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"post",
+								"67b6616c9b39be38f70798cc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePost",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3800/v1/post/67b6616c9b39be38f70798cc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"post",
+								"67b6616c9b39be38f70798cc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3800/v1/post/getAllPost",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"post",
+								"getAllPost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMyPost",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3800/v1/user/getMyPost",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"user",
+								"getMyPost"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "AddComent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "postId",
+									"value": "67b7be12775802f39cf753e3",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Este es un nuevo comentario en la publicación2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3800/v1/comment/comments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"comment",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateComment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "postId",
+									"value": "67b66018d87f88e30ac79ff1",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Holi",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3800/v1/comment/67b6a9aa5a88d7c03e2f48dc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"comment",
+								"67b6a9aa5a88d7c03e2f48dc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteComment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:3800/v1/comment/67b7b80757d25e8811001b39",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"comment",
+								"67b7b80757d25e8811001b39"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCommentpPOST",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "postId",
+									"value": "67bbb4bab58b0e5aea5c67da",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3800/v1/comment/getComment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"comment",
+								"getComment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMyComments",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:3800/v1/comment/getAll",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3800",
+							"path": [
+								"v1",
+								"comment",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

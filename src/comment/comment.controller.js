@@ -204,8 +204,8 @@ export const getComments = async (req, res) => {
 
 export const getAllComments = async (req, res) => {
     try {
-        const comments = await Comment.find().populate("userId", "username email -_id").populate("postId", "title -_id")
-
+        const userIdFromToken = req.user.uid 
+        const comments = await Comment.find({ userId: userIdFromToken, status: true }).populate("userId", "username email -_id")  .populate("postId", "title -_id") 
         if (comments.length === 0) {
             return res.status(404).send({
                 success: false,
@@ -213,17 +213,22 @@ export const getAllComments = async (req, res) => {
             })
         }
 
-        return res.status(200).send({
-            success: true,
-            message: "Comments retrieved successfully",
-            comments
-        })
+        return res.status(200).send(
+            {
+                success: true,
+                message: "Comments retrieved successfully",
+                comments
+            }
+        )
 
     } catch (error) {
-        return res.status(500).send({
-            success: false,
-            message: "Error retrieving comments",
-            error: error.message
-        })
+        return res.status(500).send(
+            {
+                success: false,
+                message: "Error retrieving comments",
+                error: error.message
+            }
+        )
     }
 }
+
