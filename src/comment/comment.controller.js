@@ -205,7 +205,7 @@ export const getComments = async (req, res) => {
 export const getAllComments = async (req, res) => {
     try {
         const userIdFromToken = req.user.uid 
-        const comments = await Comment.find({ userId: userIdFromToken, status: true }).populate("userId", "username email -_id")  .populate("postId", "title -_id") 
+        const comments = await Comment.find({ userId: userIdFromToken, status: true }).populate("userId", "username email -_id").populate("postId", "title -_id") 
         if (comments.length === 0) {
             return res.status(404).send({
                 success: false,
